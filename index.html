@@ -21,7 +21,1360 @@
 
         /* ========== SOLAR SYSTEM PARALLAX BACKGROUND ========== */
         .parallax-wrapper {
+            position: relative;<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Sayang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #050510;
+            color: #fff;
+        }
+
+        /* ========== SOLAR SYSTEM PARALLAX BACKGROUND ========== */
+        .parallax-wrapper {
             position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .solar-system-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #0a0a2a 0%, #000010 40%, #000000 100%);
+            overflow: hidden;
+        }
+
+        /* Stars */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Shooting Stars */
+        .shooting-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255,255,255,0.8), 0 0 20px 5px rgba(255,255,255,0.3);
+            animation: shoot linear infinite;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to left, transparent, rgba(255,255,255,0.8));
+            transform: translateY(-50%);
+        }
+
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translateX(-500px) translateY(500px) rotate(-45deg); opacity: 0; }
+        }
+
+        /* Sun */
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00, #ff4500);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                0 0 60px 20px rgba(255, 140, 0, 0.4),
+                0 0 100px 40px rgba(255, 69, 0, 0.2),
+                0 0 140px 60px rgba(255, 140, 0, 0.1);
+            animation: sunPulse 4s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes sunPulse {
+            0% { box-shadow: 0 0 60px 20px rgba(255, 140, 0, 0.4), 0 0 100px 40px rgba(255, 69, 0, 0.2), 0 0 140px 60px rgba(255, 140, 0, 0.1); }
+            100% { box-shadow: 0 0 80px 30px rgba(255, 140, 0, 0.6), 0 0 120px 50px rgba(255, 69, 0, 0.3), 0 0 160px 70px rgba(255, 140, 0, 0.15); }
+        }
+
+        /* Orbit Rings */
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .orbit-1 { width: 200px; height: 200px; }
+        .orbit-2 { width: 280px; height: 280px; }
+        .orbit-3 { width: 380px; height: 380px; }
+        .orbit-4 { width: 500px; height: 500px; }
+        .orbit-5 { width: 640px; height: 640px; }
+        .orbit-6 { width: 800px; height: 800px; }
+        .orbit-7 { width: 980px; height: 980px; }
+        .orbit-8 { width: 1180px; height: 1180px; }
+
+        /* Planets */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 2;
+        }
+
+        .planet:hover {
+            transform: scale(1.5);
+            z-index: 10;
+        }
+
+        .planet-tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            white-space: nowrap;
+            font-size: 0.8rem;
+            color: #fff;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .planet:hover .planet-tooltip {
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Mercury */
+        .mercury {
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle at 30% 30%, #c4c4c4, #8a8a8a);
+            box-shadow: 0 0 10px rgba(196,196,196,0.4);
+        }
+
+        /* Venus */
+        .venus {
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #e6c288, #d4a574);
+            box-shadow: 0 0 15px rgba(230,194,136,0.4);
+        }
+
+        /* Earth */
+        .earth {
+            width: 26px;
+            height: 26px;
+            background: radial-gradient(circle at 30% 30%, #4a90d9, #2e5c8a, #1a3a5c);
+            box-shadow: 0 0 15px rgba(74,144,217,0.4);
+            position: relative;
+        }
+
+        .earth::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: moonOrbit 3s linear infinite;
+        }
+
+        .moon {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ddd;
+            border-radius: 50%;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 5px rgba(221,221,221,0.5);
+        }
+
+        @keyframes moonOrbit {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Mars */
+        .mars {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #e86850, #c1440e);
+            box-shadow: 0 0 12px rgba(232,104,80,0.4);
+        }
+
+        /* Jupiter */
+        .jupiter {
+            width: 50px;
+            height: 50px;
+            background: 
+                linear-gradient(180deg, 
+                    #d4a574 0%, 
+                    #c4956a 20%, 
+                    #b8875a 40%, 
+                    #d4a574 60%, 
+                    #c4956a 80%, 
+                    #b8875a 100%);
+            box-shadow: 0 0 25px rgba(212,165,116,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .jupiter::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: rgba(139,90,43,0.5);
+            top: 30%;
+            left: 0;
+        }
+
+        .jupiter::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(139,90,43,0.5);
+            top: 60%;
+            left: 0;
+        }
+
+        /* Saturn */
+        .saturn {
+            width: 42px;
+            height: 42px;
+            background: radial-gradient(circle at 30% 30%, #e6d5a7, #c4b896);
+            box-shadow: 0 0 20px rgba(230,213,167,0.4);
+            position: relative;
+        }
+
+        .saturn-ring {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 4px solid rgba(200,180,140,0.6);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            pointer-events: none;
+        }
+
+        /* Uranus */
+        .uranus {
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle at 30% 30%, #7de3f4, #4fd0e7);
+            box-shadow: 0 0 18px rgba(125,227,244,0.4);
+        }
+
+        /* Neptune */
+        .neptune {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 30% 30%, #4b70dd, #2b4f9e);
+            box-shadow: 0 0 18px rgba(75,112,221,0.4);
+        }
+
+        /* Orbit Animations */
+        @keyframes orbit1 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        @keyframes orbit2 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(140px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(140px) rotate(-360deg); }
+        }
+
+        @keyframes orbit3 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(190px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(190px) rotate(-360deg); }
+        }
+
+        @keyframes orbit4 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(250px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(250px) rotate(-360deg); }
+        }
+
+        @keyframes orbit5 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(320px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(320px) rotate(-360deg); }
+        }
+
+        @keyframes orbit6 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(400px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(400px) rotate(-360deg); }
+        }
+
+        @keyframes orbit7 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(490px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(490px) rotate(-360deg); }
+        }
+
+        @keyframes orbit8 {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(590px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(590px) rotate(-360deg); }
+        }
+
+        .planet-orbit-1 { animation: orbit1 8s linear infinite; }
+        .planet-orbit-2 { animation: orbit2 12s linear infinite; }
+        .planet-orbit-3 { animation: orbit3 16s linear infinite; }
+        .planet-orbit-4 { animation: orbit4 20s linear infinite; }
+        .planet-orbit-5 { animation: orbit5 28s linear infinite; }
+        .planet-orbit-6 { animation: orbit6 40s linear infinite; }
+        .planet-orbit-7 { animation: orbit7 52s linear infinite; }
+        .planet-orbit-8 { animation: orbit8 64s linear infinite; }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.6rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: #ffd700;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-out;
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+        }
+
+        .hero-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,215,0,0.5), 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 0 20px rgba(255,215,0,0.3), 0 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 3rem;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            color: #ffd700;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== SLIDER SECTION ========== */
+        .slider-section {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 1rem 6rem;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 3rem;
+            font-size: 1rem;
+        }
+
+        /* Main Slider */
+        .slider-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255,215,0,0.1);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 80vh;
+            max-height: 900px;
+            min-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Text Overlay */
+        .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+            color: #fff;
+            transition: all 0.5s ease;
+        }
+
+        .slide-number {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            color: #ffd700;
+        }
+
+        .slide-text h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            color: #ffd700;
+        }
+
+        .slide-text p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 600px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Slider Controls */
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,215,0,0.5);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            color: #ffd700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-btn:hover {
+            background: rgba(255,215,0,0.2);
+            color: #ffd700;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .dot.active {
+            background: #ffd700;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .dot:hover {
+            background: rgba(255,215,0,0.6);
+        }
+
+        /* Progress bar */
+        .progress-container {
+            max-width: 900px;
+            margin: 0 auto;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        /* ========== WISH CARDS ========== */
+        .wishes-section {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 1rem 6rem;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .wishes-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .wish-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255,215,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .wish-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255,215,0,0.15);
+            border-color: rgba(255,215,0,0.3);
+        }
+
+        .wish-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .wish-card h4 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
+        .wish-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ========== FINAL MESSAGE ========== */
+        .final-section {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(5,5,16,0.9));
+        }
+
+        .final-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255,215,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
+
+        .final-box::before,
+        .final-box::after {
+            font-size: 2.5rem;
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .final-box::before {
+            content: '🪐';
+            top: -1.2rem;
+            left: 2rem;
+        }
+
+        .final-box::after {
+            content: '⭐';
+            bottom: -1.2rem;
+            right: 2rem;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .final-box h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255,215,0,0.4);
+        }
+
+        .final-box .message {
+            font-family: 'Poppins', sans-serif;
+            color: rgba(255,255,255,0.8);
+            line-height: 2;
+            font-size: 1rem;
+        }
+
+        .signature {
+            margin-top: 2rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
+        /* Balloon animation */
+        .balloon-container {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .balloon {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) translateX(50px) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
+        /* ========== MUSIC CONTROLS ========== */
+        .music-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255,215,0,0.2);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255,215,0,0.4);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .music-control.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255,215,0,0.2); }
+            50% { box-shadow: 0 5px 30px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255,215,0,0.5); }
+        }
+
+        /* ========== ANIMATIONS ON SCROLL ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .slide img {
+                height: 50vh;
+                min-height: 200px;
+                max-height: 500px;
+            }
+            .slide-overlay {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+            .wish-card {
+                padding: 1.5rem;
+            }
+            .final-box {
+                padding: 2rem 1.5rem;
+            }
+            .music-control {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            .orbit { display: none; }
+            .planet { display: none; }
+            .sun { width: 80px; height: 80px; }
+        }
+
+        @media (max-width: 1200px) {
+            .orbit-7, .orbit-8 { display: none; }
+            .planet-orbit-7, .planet-orbit-8 { display: none; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Start Overlay -->
+    <div id="startOverlay" style="position:fixed; inset:0; background: radial-gradient(ellipse at center, #0a0a2a 0%, #000010 40%, #000000 100%); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; transition: opacity 0.8s ease;">
+        <div style="position:absolute; width:100%; height:100%; overflow:hidden; pointer-events:none;">
+            <div style="position:absolute; width:100%; height:100%; background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px; opacity:0.6;"></div>
+        </div>
+        <div style="font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 6vw, 3.5rem); color: #ffd700; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(255,215,0,0.5); animation: fadeInUp 1s ease-out;">✨ Selamat Ulang Tahun ✨</div>
+        <p style="color: rgba(255,255,255,0.7); font-size: 1rem; margin-bottom: 2rem; animation: fadeInUp 1s ease-out 0.3s both;">Ketuk tombol di bawah untuk ucapan Ulang Tahun</p>
+        <button id="startBtn" style="padding: 1rem 3rem; font-size: 1.2rem; font-family: 'Poppins', sans-serif; font-weight: 600; border-radius: 50px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; border: none; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.4); transition: all 0.3s ease; animation: fadeInUp 1s ease-out 0.6s both; position:relative; z-index:1;">
+            🎵 Klik Ini Sayang
+        </button>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="https://uploader.zenzxz.dpdns.org/uploads/1777662696669.mpga" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control Button -->
+    <div class="music-control" id="musicToggle" title="Putar/Jeda Musik">
+        🎵
+    </div>
+
+    <!-- Solar System Parallax Background -->
+    <div class="solar-system-bg" id="solarSystem">
+        <div class="stars"></div>
+
+        <!-- Shooting Stars -->
+        <div class="shooting-star" style="top: 10%; left: 80%; animation-duration: 3s; animation-delay: 0s;"></div>
+        <div class="shooting-star" style="top: 30%; left: 60%; animation-duration: 4s; animation-delay: 2s;"></div>
+        <div class="shooting-star" style="top: 50%; left: 90%; animation-duration: 3.5s; animation-delay: 5s;"></div>
+        <div class="shooting-star" style="top: 20%; left: 40%; animation-duration: 4.5s; animation-delay: 7s;"></div>
+        <div class="shooting-star" style="top: 60%; left: 70%; animation-duration: 3s; animation-delay: 9s;"></div>
+
+        <!-- Sun -->
+        <div class="sun"></div>
+
+        <!-- Orbits -->
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="orbit orbit-3"></div>
+        <div class="orbit orbit-4"></div>
+        <div class="orbit orbit-5"></div>
+        <div class="orbit orbit-6"></div>
+        <div class="orbit orbit-7"></div>
+        <div class="orbit orbit-8"></div>
+
+        <!-- Planets -->
+        <div class="planet mercury planet-orbit-1" style="top: 50%; left: 50%;">
+            <div class="planet-tooltip">Merkurius - Planet Terdekat</div>
+        </div>
+
+        <div class="planet venus planet-orbit-2" style="top: 50%; left: 50%;">
+            <div class="planet-tooltip">Venus - Planet Terpanas</div>
+        </div>
+
+        <div class="planet earth planet-orbit-3" style="top: 50%; left: 50%;">
+            <div class="moon"></div>
+            <div class="planet-tooltip">Bumi - Planet Kita</div>
+        </div>
+
+        <div class="planet mars planet-orbit-4" style="top: 50%; left: 50%;">
+            <div class="planet-tooltip">Mars - Planet Merah</div>
+        </div>
+
+        <div class="planet jupiter planet-orbit-5" style="top: 50%; left: 50%;">
+            <div class="planet-tooltip">Jupiter - Planet Terbesar</div>
+        </div>
+
+        <div class="planet saturn planet-orbit-6" style="top: 50%; left: 50%;">
+            <div class="saturn-ring"></div>
+            <div class="planet-tooltip">Saturnus - Planet Ber Cincin</div>
+        </div>
+
+        <div class="planet uranus planet-orbit-7" style="top: 50%; left: 50%;">
+            <div class="planet-tooltip">Uranus - Planet Biru</div>
+        </div>
+
+        <div class="planet neptune planet-orbit-8" style="top: 50%; left: 50%;">
+            <div class="planet-tooltip">Neptunus - Planet Terjauh</div>
+        </div>
+    </div>
+
+    <!-- Balloons -->
+    <div class="balloon-container" id="balloonContainer"></div>
+
+    <div class="parallax-wrapper">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-badge">🪐 AKU MAU NGUCAPIN 🪐</div>
+            <h1 class="hero-title">Selamat Ulang Tahun Sayang!</h1>
+            <p class="hero-subtitle">Semoga harimu seindah galaksi yang terbentang luas</p>
+            <div class="scroll-hint" onclick="document.getElementById('sliderSection').scrollIntoView({behavior:'smooth'})">⬇</div>
+        </section>
+
+        <!-- Slider Section -->
+        <section class="slider-section" id="sliderSection">
+            <h2 class="section-title reveal">Momen Berharga</h2>
+            <p class="section-subtitle reveal">Setiap foto punya cerita dan doa untukmu</p>
+
+            <div class="slider-container reveal">
+                <div class="slider" id="slider">
+                    <!-- Slide 1 -->
+                    <div class="slide">
+                        <img src="src/img/img1.jpeg" alt="Birthday">
+                        <div class="slide-overlay">
+                            <span class="slide-number">01</span>
+                            <div class="slide-text">
+                                <h3>Selamat Bertambah Usia</h3>
+                                <p>Hari ini adalah bukti bahwa kamu telah melewati setiap tantangan dengan kekuatan dan kebahagiaan. Semoga tahun ini membawa lebih banyak tawa, cinta, dan impian yang menjadi nyata.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <img src="src/img/img2.jpeg" alt="Celebration">
+                        <div class="slide-overlay">
+                            <span class="slide-number">02</span>
+                            <div class="slide-text">
+                                <h3>Pesta Kecil Hatimu</h3>
+                                <p>Semoga setiap detik dalam hidupmu terasa seperti confetti yang berjatuhan—berwarna-warni, penuh kejutan, dan membawa kegembiraan tanpa akhir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <img src="src/img/img3.jpeg" alt="Flowers">
+                        <div class="slide-overlay">
+                            <span class="slide-number">03</span>
+                            <div class="slide-text">
+                                <h3>Mekarlah Selalu</h3>
+                                <p>Seperti bunga yang mekar di musim semi, semoga hatimu selalu dipenuhi kehangatan, cinta, dan keindahan di setiap langkah perjalanan hidupmu.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="slide">
+                        <img src="src/img/img4.jpeg" alt="Lights">
+                        <div class="slide-overlay">
+                            <span class="slide-number">04</span>
+                            <div class="slide-text">
+                                <h3>Cahaya di Hidupmu</h3>
+                                <p>Semoga cahaya kebahagiaan selalu menerangi setiap sudut harimu. Kamu pantas mendapatkan semua kebaikan yang dunia ini punya.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="slide">
+                        <img src="src/img/img5.jpeg" alt="Gift">
+                        <div class="slide-overlay">
+                            <span class="slide-number">05</span>
+                            <div class="slide-text">
+                                <h3>Hadiah Terindah</h3>
+                                <p>Kehadiranmu adalah hadiah terindah bagi semua orang yang mengenalmu. Terima kasih telah menjadi dirimu yang luar biasa. Selamat merayakan hari istimewa ini!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 6 -->
+                    <div class="slide">
+                        <img src="src/img/img6.jpeg" alt="Momen 6">
+                        <div class="slide-overlay">
+                            <span class="slide-number">06</span>
+                            <div class="slide-text">
+                                <h3>Momen Spesial 6</h3>
+                                <p>Kenangan indah yang selalu terkenang, semoga kebahagiaan selalu menyertai langkahmu.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 7 -->
+                    <div class="slide">
+                        <img src="src/img/img7.jpeg" alt="Momen 7">
+                        <div class="slide-overlay">
+                            <span class="slide-number">07</span>
+                            <div class="slide-text">
+                                <h3>Momen Spesial 7</h3>
+                                <p>Setiap detik bersamamu adalah hadiah yang tak ternilai. Semoga selalu bahagia.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 8 -->
+                    <div class="slide">
+                        <img src="src/img/img8.jpeg" alt="Momen 8">
+                        <div class="slide-overlay">
+                            <span class="slide-number">08</span>
+                            <div class="slide-text">
+                                <h3>Momen Spesial 8</h3>
+                                <p>Semoga setiap perjalanan hidupmu penuh warna dan cerita indah yang baru.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 9 -->
+                    <div class="slide">
+                        <img src="src/img/img9.jpeg" alt="Momen 9">
+                        <div class="slide-overlay">
+                            <span class="slide-number">09</span>
+                            <div class="slide-text">
+                                <h3>Momen Spesial 9</h3>
+                                <p>Terima kasih telah menjadi bagian terindah dalam hidupku. Semoga selalu diberi kebahagiaan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container reveal">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="slider-nav reveal">
+                <button class="slider-btn" id="prevBtn">❮</button>
+                <div class="slider-dots" id="dotsContainer">
+                    <button class="dot active" data-index="0"></button>
+                    <button class="dot" data-index="1"></button>
+                    <button class="dot" data-index="2"></button>
+                    <button class="dot" data-index="3"></button>
+                    <button class="dot" data-index="4"></button>
+                    <button class="dot" data-index="5"></button>
+                    <button class="dot" data-index="6"></button>
+                    <button class="dot" data-index="7"></button>
+                    <button class="dot" data-index="8"></button>
+                </div>
+                <button class="slider-btn" id="nextBtn">❯</button>
+            </div>
+        </section>
+
+        <!-- Wish Cards Section -->
+        <section class="wishes-section">
+            <h2 class="section-title reveal">Doa & Harapan</h2>
+            <p class="section-subtitle reveal">Beberapa hal baik yang kuinginkan untukmu</p>
+
+            <div class="wishes-grid">
+                <div class="wish-card reveal">
+                    <div class="wish-icon">✨</div>
+                    <h4>Impian Menjadi Nyata</h4>
+                    <p>Semoga setiap mimpi yang kamu pendam perlahan-lahan menjadi kenyataan yang indah di waktu yang tepat.</p>
+                </div>
+                <div class="wish-card reveal">
+                    <div class="wish-icon">💖</div>
+                    <h4>Cinta yang Abadi</h4>
+                    <p>Semoga kamu selalu dikelilingi oleh orang-orang yang mencintaimu dengan tulus dan tanpa syarat.</p>
+                </div>
+                <div class="wish-card reveal">
+                    <div class="wish-icon">🌈</div>
+                    <h4>Hari yang Cerah</h4>
+                    <p>Semoga setiap pagi membawa harapan baru dan setiap malam membawa kedamaian yang menyenangkan.</p>
+                </div>
+                <div class="wish-card reveal">
+                    <div class="wish-icon">🌟</div>
+                    <h4>Sukses Selalu</h4>
+                    <p>Semoga langkahmu selalu diiringi kesuksesan dalam setiap hal yang kamu kerjakan dan cita-citakan.</p>
+                </div>
+                <div class="wish-card reveal">
+                    <div class="wish-icon">🕊️</div>
+                    <h4>Kedamaian Hati</h4>
+                    <p>Semoga hatimu selalu tenang, pikiranmu selalu jernih, dan hidupmu selalu damai.</p>
+                </div>
+                <div class="wish-card reveal">
+                    <div class="wish-icon">🎊</div>
+                    <h4>Kebahagiaan Tak Terhingga</h4>
+                    <p>Semoga tawa dan kebahagiaan selalu mengisi harimu, hari ini dan seterusnya.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Section -->
+        <section class="final-section">
+            <div class="final-box reveal">
+                <h2>Ucapan Terdalam</h2>
+                <p class="message">
+                    Di hari yang spesial ini, aku hanya ingin kamu tahu<br>
+                    betapa berharganya dirimu di hidupku.<br>
+                    Semoga tahun ini membawa kebahagiaan berlipat ganda,<br>
+                    cinta yang melimpah, dan impian yang terwujud.<br><br>
+                    Teruslah bersinar seperti bintang di galaksi,<br>
+                    teruslah tersenyum, dan teruslah menjadi dirimu yang luar biasa.<br><br>
+                    <strong>Happy Birthday!</strong>
+                </p>
+                <div class="signature">Dengan cinta, untukmu ❤️</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ========== FLOATING BALLOONS ==========
+        function createBalloon() {
+            const container = document.getElementById('balloonContainer');
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            const emojis = ['🎈', '🎀', '🎁', '💐', '🎂', '🧁', '🌸', '🎉', '⭐', '🪐'];
+            balloon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            balloon.style.left = Math.random() * 100 + '%';
+            balloon.style.fontSize = (Math.random() * 25 + 20) + 'px';
+            balloon.style.animationDuration = (Math.random() * 6 + 5) + 's';
+            container.appendChild(balloon);
+
+            setTimeout(() => balloon.remove(), 11000);
+        }
+        setInterval(createBalloon, 2000);
+
+        // ========== SLIDER FUNCTIONALITY ==========
+        const slider = document.getElementById('slider');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const progressBar = document.getElementById('progressBar');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+        let slideInterval;
+        let progressInterval;
+        const autoSlideTime = 5000;
+
+        function goToSlide(index) {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+
+            currentSlide = index;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+
+            resetProgress();
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        function resetProgress() {
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+            clearInterval(progressInterval);
+
+            setTimeout(() => {
+                progressBar.style.transition = `width ${autoSlideTime}ms linear`;
+                progressBar.style.width = '100%';
+            }, 50);
+        }
+
+        function startAutoSlide() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, autoSlideTime);
+            resetProgress();
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            prevSlide();
+            startAutoSlide();
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            nextSlide();
+            startAutoSlide();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+                startAutoSlide();
+            });
+        });
+
+        startAutoSlide();
+
+        // ========== START OVERLAY & MUSIC CONTROLS ==========
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const startOverlay = document.getElementById('startOverlay');
+        const startBtn = document.getElementById('startBtn');
+        let isPlaying = false;
+
+        function startMusic() {
+            bgMusic.volume = 0.5;
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicToggle.textContent = '🎶';
+                musicToggle.classList.add('playing');
+            }).catch(e => {
+                console.log('Audio play failed:', e);
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🎵';
+                musicToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                startMusic();
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Start button click - removes overlay and plays music
+        startBtn.addEventListener('click', () => {
+            startMusic();
+            startOverlay.style.opacity = '0';
+            setTimeout(() => {
+                startOverlay.style.display = 'none';
+            }, 800);
+        });
+
+        // Also allow tap anywhere on overlay to start
+        startOverlay.addEventListener('click', (e) => {
+            if (e.target === startOverlay || e.target.closest('div') === startOverlay.querySelector('div')) {
+                startBtn.click();
+            }
+        });
+
+        // ========== SCROLL REVEAL ANIMATION ==========
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            reveals.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // ========== PARALLAX EFFECT ==========
+        const solarSystem = document.getElementById('solarSystem');
+        const orbits = document.querySelectorAll('.orbit');
+        const planets = document.querySelectorAll('.planet');
+        const stars = document.querySelector('.stars');
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+
+            // Move solar system slower than scroll
+            solarSystem.style.transform = `translateY(${scrolled * 0.1}px)`;
+
+            // Stars move at different speed
+            stars.style.transform = `translateY(${scrolled * 0.05}px)`;
+
+            // Orbits rotate slightly based on scroll
+            orbits.forEach((orbit, i) => {
+                const speed = 0.02 + (i * 0.005);
+                orbit.style.transform = `translate(-50%, -50%) rotate(${scrolled * speed}deg)`;
+            });
+        });
+
+        // ========== MOUSE PARALLAX ==========
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            const sun = document.querySelector('.sun');
+            sun.style.transform = `translate(calc(-50% + ${mouseX * 20}px), calc(-50% + ${mouseY * 20}px))`;
+
+            orbits.forEach((orbit, i) => {
+                const depth = (i + 1) * 5;
+                orbit.style.marginLeft = `${mouseX * depth}px`;
+                orbit.style.marginTop = `${mouseY * depth}px`;
+            });
+        });
+
+        // ========== PLANET CLICK INTERACTION ==========
+        planets.forEach(planet => {
+            planet.addEventListener('click', function() {
+                // Create sparkle effect
+                const rect = this.getBoundingClientRect();
+                for (let i = 0; i < 8; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = rect.left + rect.width/2 + 'px';
+                    sparkle.style.top = rect.top + rect.height/2 + 'px';
+                    sparkle.style.width = '4px';
+                    sparkle.style.height = '4px';
+                    sparkle.style.background = '#ffd700';
+                    sparkle.style.borderRadius = '50%';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '9999';
+                    sparkle.style.boxShadow = '0 0 10px #ffd700';
+                    document.body.appendChild(sparkle);
+
+                    const angle = (i / 8) * Math.PI * 2;
+                    const distance = 50 + Math.random() * 50;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+
+                    sparkle.animate([
+                        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                        { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+                    ], {
+                        duration: 800,
+                        easing: 'ease-out'
+                    }).onfinish = () => sparkle.remove();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
             min-height: 100vh;
             overflow: hidden;
         }
