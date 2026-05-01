@@ -761,6 +761,43 @@
             }
         }
 
+        /* ========== MUSIC CONTROLS ========== */
+        .music-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255,215,0,0.2);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255,215,0,0.4);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .music-control.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255,215,0,0.2); }
+            50% { box-shadow: 0 5px 30px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255,215,0,0.5); }
+        }
+
         /* ========== ANIMATIONS ON SCROLL ========== */
         .reveal {
             opacity: 0;
@@ -811,9 +848,14 @@
 <body>
 
     <!-- Background Music -->
-    <audio id="bgMusic" loop autoplay muted>
+    <audio id="bgMusic" loop>
         <source src="https://uploader.zenzxz.dpdns.org/uploads/1777662696669.mpga" type="audio/mpeg">
     </audio>
+
+    <!-- Music Control Button -->
+    <div class="music-control" id="musicToggle" title="Putar/Jeda Musik">
+        🎵
+    </div>
 
     <!-- Solar System Parallax Background -->
     <div class="solar-system-bg" id="solarSystem">
@@ -1160,24 +1202,68 @@
 
         startAutoSlide();
 
-        // ========== AUTOPLAY MUSIC ==========
+        // ========== MUSIC CONTROLS ==========
         const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
 
+        function startMusic() {
+            bgMusic.muted = false;
+            bgMusic.volume = 0.5;
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicToggle.textContent = '🎶';
+                musicToggle.classList.add('playing');
+            }).catch(e => {
+                console.log('Audio play failed:', e);
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🎵';
+                musicToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                startMusic();
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Try autoplay on load (with muted trick for browser policy)
         window.addEventListener('load', () => {
             bgMusic.volume = 0.5;
-            bgMusic.play().catch(() => {
-                // Browser blocked autoplay, try again on first interaction
-                const playOnInteract = () => {
-                    bgMusic.play();
-                    document.removeEventListener('click', playOnInteract);
-                    document.removeEventListener('touchstart', playOnInteract);
-                    document.removeEventListener('scroll', playOnInteract);
-                };
-                document.addEventListener('click', playOnInteract);
-                document.addEventListener('touchstart', playOnInteract);
-                document.addEventListener('scroll', playOnInteract);
+            // First try unmuted
+            bgMusic.play().then(() => {
+                bgMusic.muted = false;
+                isPlaying = true;
+                musicToggle.textContent = '🎶';
+                musicToggle.classList.add('playing');
+            }).catch(() => {
+                // If blocked, keep muted and wait for user interaction
+                bgMusic.muted = true;
+                bgMusic.play().catch(() => {});
+                musicToggle.textContent = '🔇';
             });
         });
+
+        // Auto-unmute on first user interaction (click, scroll, touch)
+        const unlockAudio = () => {
+            if (bgMusic.muted) {
+                startMusic();
+            }
+            document.removeEventListener('click', unlockAudio);
+            document.removeEventListener('scroll', unlockAudio);
+            document.removeEventListener('touchstart', unlockAudio);
+            document.removeEventListener('keydown', unlockAudio);
+        };
+
+        document.addEventListener('click', unlockAudio);
+        document.addEventListener('scroll', unlockAudio);
+        document.addEventListener('touchstart', unlockAudio);
+        document.addEventListener('keydown', unlockAudio);
 
         // ========== SCROLL REVEAL ANIMATION ==========
         function revealOnScroll() {
