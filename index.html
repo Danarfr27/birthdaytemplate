@@ -843,11 +843,12 @@
             .planet-orbit-7, .planet-orbit-8 { display: none; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
     <!-- Background Music -->
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop autoplay muted>
         <source src="https://uploader.zenzxz.dpdns.org/uploads/1777662696669.mpga" type="audio/mpeg">
     </audio>
 
@@ -1206,32 +1207,63 @@
         const musicToggle = document.getElementById('musicToggle');
         let isPlaying = false;
 
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicToggle.textContent = '🎵';
-                musicToggle.classList.remove('playing');
-            } else {
-                bgMusic.play().catch(e => {
-                    console.log('Audio play failed:', e);
-                    alert('Klik tombol ini lagi untuk memutar lagu!');
-                });
-                musicToggle.textContent = '🎶';
-                musicToggle.classList.add('playing');
-            }
-            isPlaying = !isPlaying;
-        });
-
-        window.addEventListener('load', () => {
+        function startMusic() {
+            bgMusic.muted = false;
             bgMusic.volume = 0.5;
             bgMusic.play().then(() => {
                 isPlaying = true;
                 musicToggle.textContent = '🎶';
                 musicToggle.classList.add('playing');
+            }).catch(e => {
+                console.log('Audio play failed:', e);
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🎵';
+                musicToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                startMusic();
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Try autoplay on load (with muted trick for browser policy)
+        window.addEventListener('load', () => {
+            bgMusic.volume = 0.5;
+            // First try unmuted
+            bgMusic.play().then(() => {
+                bgMusic.muted = false;
+                isPlaying = true;
+                musicToggle.textContent = '🎶';
+                musicToggle.classList.add('playing');
             }).catch(() => {
-                musicToggle.textContent = '▶️';
+                // If blocked, keep muted and wait for user interaction
+                bgMusic.muted = true;
+                bgMusic.play().catch(() => {});
+                musicToggle.textContent = '🔇';
             });
         });
+
+        // Auto-unmute on first user interaction (click, scroll, touch)
+        const unlockAudio = () => {
+            if (bgMusic.muted) {
+                startMusic();
+            }
+            document.removeEventListener('click', unlockAudio);
+            document.removeEventListener('scroll', unlockAudio);
+            document.removeEventListener('touchstart', unlockAudio);
+            document.removeEventListener('keydown', unlockAudio);
+        };
+
+        document.addEventListener('click', unlockAudio);
+        document.addEventListener('scroll', unlockAudio);
+        document.addEventListener('touchstart', unlockAudio);
+        document.addEventListener('keydown', unlockAudio);
 
         // ========== SCROLL REVEAL ANIMATION ==========
         function revealOnScroll() {
